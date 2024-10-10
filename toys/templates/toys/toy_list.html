@@ -1,0 +1,25 @@
+{% extends 'toys/base.html' %}
+
+{% block title %}Toy Shop{% endblock %}
+
+{% block content %}
+<h2>Toy Shop</h2>
+<ul class="toys">
+    {% for toy in toys %}
+        <li class="toy">
+            <h3>{{ toy.name }}</h3>
+            <p>{{ toy.description }}</p>
+            <p>Price: ${{ toy.price }}</p>
+            {% if toy.image %}
+                <img src="{{ toy.image.url }}" alt="{{ toy.name }}">
+            {% else %}
+                <p>No image available.</p>
+            {% endif %}
+            <!-- Apply the button-like class to the 'View Details' link -->
+            <a href="{% url 'toy_details' toy.id %}" class="button-link">View Details</a>
+        </li>
+    {% empty %}
+        <p>No toys available.</p>
+    {% endfor %}
+</ul>
+{% endblock %}

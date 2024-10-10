@@ -1,0 +1,15 @@
+{% extends 'toys/base.html' %}
+
+{% block title %}Payment{% endblock %}
+
+{% block content %}
+<h2>Proceed to Payment</h2>
+
+<p>Your order has been created. To complete your purchase, please proceed with payment.</p>
+
+<!-- This is where you would integrate with a payment gateway like Stripe or PayPal -->
+<p><strong>Payment integration coming soon!</strong></p>
+
+<a href="{% url 'home' %}" class="button">Return to Home</a>
+
+{% endblock %}

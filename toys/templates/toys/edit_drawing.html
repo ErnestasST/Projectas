@@ -1,0 +1,30 @@
+{% extends 'toys/base.html' %}
+
+{% block title %}Edit Drawing{% endblock %}
+
+{% block content %}
+<div class="edit-drawing-container">
+    <h2 class="heading">Edit Your Drawing: {{ drawing.name }}</h2>
+
+    <!-- Display the current image if it exists -->
+    {% if drawing.image and drawing.image.url %}
+        <div class="current-image-section">
+            <p class="image-label">Current Image:</p>
+            <img src="{{ drawing.image.url }}" alt="{{ drawing.name }}" class="current-image">
+        </div>
+    {% else %}
+        <p class="no-image-text">No image uploaded for this drawing.</p>
+    {% endif %}
+
+    <!-- Form to edit the drawing -->
+    <form method="post" enctype="multipart/form-data" class="edit-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="form-actions">
+            <button type="submit" class="button save-btn">Save Changes</button>
+            <a href="{% url 'track_drawings' %}" class="button cancel-btn">Cancel</a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

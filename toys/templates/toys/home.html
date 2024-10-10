@@ -1,0 +1,38 @@
+{% extends 'toys/base.html' %}
+
+{% block title %}Home - Toy Shop{% endblock %}
+
+{% block content %}
+<h1>Welcome to the Toy Shop</h1>
+<p>Explore the amazing world of your imagination, factory-made stuffed toys and their accessories!</p>
+
+<!-- Button to Shop Toys -->
+<a href="{% url 'toy_list' %}" class="button">Shop Toys</a>
+
+<!-- Button to View Cart -->
+{% if user.is_authenticated %}
+    <a href="{% url 'view_cart' %}" class="button">View Cart</a>
+{% else %}
+    <p>Please <a href="{% url 'login' %}">login</a> to view your cart.</p>
+{% endif %}
+
+<div class="reviews-section">
+    {% for review in reviews %}
+    <div class="review">
+        <h3>{{ review.customer_name }}'s Review</h3>
+
+        <!-- Display the review image if available -->
+        {% if review.image %}
+            <img src="{{ review.image.url }}" alt="{{ review.customer_name }}'s review photo" class="review-image">
+        {% endif %}
+
+        <!-- Display the review text -->
+        <p>{{ review.review_text }}</p>
+
+        <small>Reviewed on {{ review.created_at|date:"F j, Y" }}</small>
+    </div>
+    {% empty %}
+        <p>No reviews available yet. Be the first to review!</p>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'toys/base.html' %}
+
+{% block title %}My Uploaded Drawings{% endblock %}
+
+{% block content %}
+<h2>Your Uploaded Drawings</h2>
+
+<ul>
+    {% for drawing in drawings %}
+    <li>
+        <h3>{{ drawing.name }}</h3>
+        <p>{{ drawing.description }}</p>
+        <p>Price: ${{ drawing.price }}</p>
+        <p>Status: {{ drawing.status }}</p>
+
+        <!-- Check if the drawing has an image before displaying it -->
+        {% if drawing.image and drawing.image.url %}
+            <img src="{{ drawing.image.url }}" alt="{{ drawing.name }}" style="max-width: 150px;">
+        {% else %}
+            <p>No image uploaded for this drawing.</p>
+        {% endif %}
+        <a href="{% url 'edit_drawing' drawing.id %}">Edit Drawing</a>
+    </li>
+    {% empty %}
+    <p>You have not uploaded any drawings yet.</p>
+    {% endfor %}
+</ul>
+
+{% endblock %}

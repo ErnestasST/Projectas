@@ -1,0 +1,45 @@
+{% extends 'toys/base.html' %}
+
+{% block title %}Checkout{% endblock %}
+
+{% block content %}
+<h2>Checkout</h2>
+
+<!-- Display the items in the cart -->
+<table>
+    <thead>
+        <tr>
+            <th>Item</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in cart_items %}
+        <tr>
+            <td>{{ item.item.name }}</td>  <!-- Use 'item' to get the correct name -->
+            <td>{{ item.quantity }}</td>
+            <td>${{ item.price|floatformat:2 }}</td>
+            <td>${{ item.subtotal|floatformat:2 }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">Your cart is empty.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Display total price -->
+<p><strong>Total Price:</strong> ${{ total_price|floatformat:2 }}</p>
+
+<!-- Checkout button -->
+<form method="post" action="{% url 'payment' %}">
+    {% csrf_token %}
+    <button type="submit" class="button">Proceed to Payment</button>
+</form>
+
+<a href="{% url 'view_cart' %}" class="button">Back to Cart</a>
+
+{% endblock %}

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Toy Shop{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'toy_list' %}">Shop Toys</a></li>
+                <li><a href="{% url 'upload_drawing' %}">Upload Drawing</a></li>
+                <li><a href="{% url 'track_drawings' %}">Track Drawings</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'user_profile' %}">Profile</a></li>
+                    <!-- Secure Logout with POST -->
+                    <li>
+                        <form method="post" action="{% url 'logout' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="button-link">Logout</button>
+                        </form>
+                    </li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                    <li><a href="{% url 'register' %}">Register</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+    <footer>
+        <p>&copy; 2024 Toy Shop. All rights reserved.</p>
+    </footer>
+</html>

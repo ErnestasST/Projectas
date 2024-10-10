@@ -1,0 +1,32 @@
+{% extends 'toys/base.html' %}
+
+{% block title %}Upload Drawing{% endblock %}
+
+{% block content %}
+<h2>Upload Your Toy Drawing</h2>
+
+<!-- Add enctype="multipart/form-data" to handle file uploads -->
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <!-- Display the calculated price -->
+    {% if calculated_price %}
+        <p><strong>Current Price: ${{ calculated_price|floatformat:2 }}</strong></p>
+    {% else %}
+        <p><strong>Enter dimensions to calculate the price.</strong></p>
+    {% endif %}
+
+    <button type="submit" name="recalculate_price" class="button">Recalculate Price</button>
+    <button type="submit" name="submit_drawing" class="button">Upload Drawing</button>
+</form>
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+{% endblock %}
